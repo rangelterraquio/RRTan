@@ -9,6 +9,15 @@
 import Foundation
 import UIKit
 
+struct PhysicsCategory{
+    static let none        : UInt32  = 0
+    static let projectil   : UInt32  = 1
+    static let enemies     : UInt32  = 2
+    static let collectible : UInt32  = 4
+    static let objectBomb  : UInt32  = 5
+}
+
+
 extension CGFloat{
     func degreesToradius() -> CGFloat {
         return self * .pi / 180

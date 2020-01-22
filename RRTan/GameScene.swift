@@ -14,11 +14,13 @@ class GameScene: SKScene {
    
     let gameLayer: GameLayer = GameLayer()
     let hudLayer: HUDLayer = HUDLayer()
-    
+    let screenSize = UIScreen.main.bounds
     
     override func didMove(to view: SKView) {
+        self.physicsWorld.contactDelegate = self
         self.backgroundColor = .gray
         self.addChild(gameLayer)
+        
         
         hudLayer.delegate = self
         self.addChild(hudLayer)
@@ -63,6 +65,14 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        
+        for node in gameLayer.children{
+            if node.name == "projectil"{
+                if node.position.y > screenSize.height{
+                    node.removeFromParent()
+                }
+            }
+        }
     }
 }
 
@@ -76,4 +86,24 @@ extension GameScene: HudDelegate{
     }
     
     
+}
+
+
+
+//Physics
+extension GameScene:SKPhysicsContactDelegate{
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        if contact.bodyA.contactTestBitMask == PhysicsCategory.projectil || contact.bodyB.contactTestBitMask == PhysicsCategory.projectil{
+            print("Tá mantando")
+        }
+//        if let node = contact.bodyA.node as? Enemy {
+//            node.life -= 1
+//        }
+//
+//        if let node = contact.bodyB.node as? Enemy{
+//            node.life -= 1
+//
+//        }
+    }
 }

@@ -35,10 +35,20 @@ class Character: SKSpriteNode{
                 return
             }
             
+            
+   
+
+            
+            
              let node = SKShapeNode(circleOfRadius: 15)
-            node.fillColor = self.shootColor
+             node.fillColor = self.shootColor
              node.physicsBody = SKPhysicsBody(circleOfRadius:15)
+//            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
+             node.physicsBody?.collisionBitMask = PhysicsCategory.enemies
+             node.physicsBody?.mass = 0.01
+             node.physicsBody?.restitution = 1.0
              node.position = self.position
+             node.name = "projectil"
               
             print("vector \(self.vector)")
             let position = CGPoint(x: self.vector.dx * 10, y: self.vector.dy * 10)
@@ -52,14 +62,16 @@ class Character: SKSpriteNode{
             let direction = offset.normalized()
             
             // 7 - Make it shoot far enough to be guaranteed off screen
-            let shootAmount = direction * 1000
+            let shootAmount = direction * 100
             
             // 8 - Add the shoot amount to the current position
-            realDest = shootAmount + node.position
-            let actionMove = SKAction.move(to: realDest, duration: 1.5)
-            let actionMoveDone = SKAction.removeFromParent()
-            let sequece = SKAction.sequence([actionMove, actionMoveDone])
-            node.run(sequece)
+//            realDest = shootAmount + node.position
+//            let actionMove = SKAction.move(to: realDest, duration: 1.5)
+//            let actionMoveDone = SKAction.removeFromParent()
+//            let sequece = SKAction.sequence([actionMove, actionMoveDone])
+//            node.run(sequece)
+            node.physicsBody?.applyImpulse(CGVector(dx: self.vector.dx * 20, dy:  self.vector.dy * 20))//applyImpulse(CGVector(dx: realDest.x, dy: realDest.y))
+            
         }
          
       // 9 - Create the actions
@@ -74,6 +86,21 @@ class Character: SKSpriteNode{
         let angle = atan2(vector.dy, vector.dx)
         
         self.zRotation = angle + CGFloat(90).degreesToradius()
+        
+        
+
+
+        // Normalize the components
+        let magnitude = sqrt(self.vector.dx*self.vector.dx+self.vector.dy*self.vector.dy)
+        self.vector.dx /= magnitude
+        self.vector.dy /= magnitude
+
+//        // Create a vector in the direction of the bird
+//        let vector = CGVector(dx:strength*dx, dy:strength*dy)
+//
+//        // Apply impulse
+//        projectile.physicsBody?.applyImpulse(vector)
+//
        
     }
     
