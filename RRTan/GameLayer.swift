@@ -24,6 +24,7 @@ class GameLayer: SKNode{
         fatalError("init(coder:) has not been implemented")
     }
      func touchDown(atPoint pos : CGPoint) {
+    
         
     }
     

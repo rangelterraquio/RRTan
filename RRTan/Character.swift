@@ -13,7 +13,8 @@ class Character: SKSpriteNode{
     
     
   var vector: CGVector = CGVector.zero
-    
+  var shootColor = UIColor.blue
+
   init() {
         let texture = SKTexture(imageNamed: "elephant")
         super.init(texture: texture, color: .clear, size: texture.size())
@@ -35,7 +36,7 @@ class Character: SKSpriteNode{
             }
             
              let node = SKShapeNode(circleOfRadius: 15)
-             node.fillColor = .blue
+            node.fillColor = self.shootColor
              node.physicsBody = SKPhysicsBody(circleOfRadius:15)
              node.position = self.position
               
