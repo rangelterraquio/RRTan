@@ -20,9 +20,19 @@ class HUDLayer: SKNode {
     var greenButton: SKShapeNode! = nil
     var blueButton: SKShapeNode! = nil
     
+    //score
+    let score = SKLabelNode(text: "0")
+    var scoreInt = 0
     override init() {
         super.init()
         setupColorsMenu()
+        
+        self.score.color = .black
+        self.score.fontSize = 60
+        self.score.colorBlendFactor = 1.0
+        self.score.position = CGPoint(x: 0, y: screenSize.height * 1.2)
+        self.addChild(score)
+        
     }
     
     private func setupColorsMenu(){
@@ -49,7 +59,9 @@ class HUDLayer: SKNode {
      
     }
     
-    
+    func updateScore(){
+        self.score.text = "\(scoreInt+=1)"
+    }
     
     
     func touchDown(atPoint pos : CGPoint) -> UIColor? {

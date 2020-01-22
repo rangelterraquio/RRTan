@@ -68,7 +68,10 @@ class GameScene: SKScene {
         
         for node in gameLayer.children{
             if node.name == "projectil"{
-                if node.position.y > screenSize.height{
+                if node.position.y > screenSize.height || node.position.y < -screenSize.height{
+                    node.removeFromParent()
+                }
+                if node.position.x > screenSize.width || node.position.x < -screenSize.width{
                     node.removeFromParent()
                 }
             }
@@ -94,16 +97,30 @@ extension GameScene: HudDelegate{
 extension GameScene:SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
         
-        if contact.bodyA.contactTestBitMask == PhysicsCategory.projectil || contact.bodyB.contactTestBitMask == PhysicsCategory.projectil{
-            print("Tá mantando")
+        if contact.bodyA.categoryBitMask == PhysicsCategory.projectil || contact.bodyB.categoryBitMask == PhysicsCategory.projectil{
+            if contact.bodyA.node?.name == "character" || contact.bodyB.node?.name == "character"{
+                print("morreu")
+            }
+            if let node = contact.bodyA.node as? Enemy{
+                if node.color == gameLayer.character.shootColor{
+                    node.life -= 1
+                }
+            }
+            if let node = contact.bodyB.node as? Enemy{
+                if node.color == gameLayer.character.shootColor{
+                    node.life -= 1
+                    
+                }
+            }
         }
-//        if let node = contact.bodyA.node as? Enemy {
-//            node.life -= 1
-//        }
-//
-//        if let node = contact.bodyB.node as? Enemy{
-//            node.life -= 1
-//
-//        }
+        
+         if contact.bodyA.categoryBitMask == PhysicsCategory.character || contact.bodyB.categoryBitMask == PhysicsCategory.character{
+            self.isPaused = true
+            let node  = SKLabelNode(text: "VC MORREU")
+            node.fontSize = 80
+            node.fontColor = .green
+            node.position  = CGPoint(x: 0, y: 0)
+            self.addChild(node)
+         }
     }
 }

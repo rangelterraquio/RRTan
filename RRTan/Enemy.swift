@@ -13,6 +13,8 @@ class Enemy: SKSpriteNode {
     
     let colors: [UIColor] = [.red,.blue, .green]
     var labelLife = SKLabelNode(text: "0")
+    
+    var delegate: HudDelegate? = nil
     var life: UInt32 = 100 {
         didSet{
             if life == 0 {
@@ -25,18 +27,20 @@ class Enemy: SKSpriteNode {
     
     
     init() {
-        let texture = SKTexture(imageNamed: "saquere")
+        let texture = SKTexture(imageNamed: "squaree")
         super.init(texture: texture, color: .clear, size: texture.size())
-        self.setScale(0.5)
         self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width/2, height: texture.size().height/2))
-//        self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil
-        self.physicsBody?.collisionBitMask = PhysicsCategory.projectil
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil | PhysicsCategory.character
+        self.physicsBody?.collisionBitMask = PhysicsCategory.projectil | PhysicsCategory.character
+        self.physicsBody?.categoryBitMask = PhysicsCategory.enemies
+        self.physicsBody?.usesPreciseCollisionDetection = true
         self.physicsBody?.mass = 2
         self.physicsBody?.isDynamic = false
+        self.setScale(0.7)
         labelLife.color = .black
         labelLife.colorBlendFactor = 1.0
-        labelLife.fontSize = 30
-        labelLife.position = CGPoint(x: 0, y: 0)
+        labelLife.fontSize = 40
+        labelLife.position = CGPoint(x: 0.5, y: 0.5)
         self.addChild(labelLife)
     }
     

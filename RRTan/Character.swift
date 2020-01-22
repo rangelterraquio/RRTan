@@ -12,13 +12,20 @@ import SpriteKit
 class Character: SKSpriteNode{
     
     
-  var vector: CGVector = CGVector.zero
+  var vector: CGVector = CGVector(dx: 10, dy: 10)
   var shootColor = UIColor.blue
 
   init() {
         let texture = SKTexture(imageNamed: "elephant")
         super.init(texture: texture, color: .clear, size: texture.size())
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
+        self.physicsBody?.collisionBitMask = PhysicsCategory.enemies
+        self.physicsBody?.categoryBitMask = PhysicsCategory.character
+        self.physicsBody?.affectedByGravity = false
+        self.physicsBody?.mass = 100
         self.setScale(0.4)
+        self.name = "character" 
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -42,13 +49,15 @@ class Character: SKSpriteNode{
             
              let node = SKShapeNode(circleOfRadius: 15)
              node.fillColor = self.shootColor
-             node.physicsBody = SKPhysicsBody(circleOfRadius:15)
-//            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
-             node.physicsBody?.collisionBitMask = PhysicsCategory.enemies
-             node.physicsBody?.mass = 0.01
-             node.physicsBody?.restitution = 1.0
-             node.position = self.position
-             node.name = "projectil"
+            node.physicsBody = SKPhysicsBody(circleOfRadius:15)
+            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
+            node.physicsBody?.collisionBitMask = PhysicsCategory.enemies
+            node.physicsBody?.categoryBitMask = PhysicsCategory.projectil
+            node.physicsBody?.mass = 0.01
+            node.physicsBody?.restitution = 1.0
+            node.physicsBody?.affectedByGravity = false
+            node.position = self.position
+            node.name = "projectil"
               
             print("vector \(self.vector)")
             let position = CGPoint(x: self.vector.dx * 10, y: self.vector.dy * 10)
@@ -70,13 +79,13 @@ class Character: SKSpriteNode{
 //            let actionMoveDone = SKAction.removeFromParent()
 //            let sequece = SKAction.sequence([actionMove, actionMoveDone])
 //            node.run(sequece)
-            node.physicsBody?.applyImpulse(CGVector(dx: self.vector.dx * 20, dy:  self.vector.dy * 20))//applyImpulse(CGVector(dx: realDest.x, dy: realDest.y))
+            node.physicsBody?.applyImpulse(CGVector(dx: self.vector.dx * 14, dy:  self.vector.dy * 14))//applyImpulse(CGVector(dx: realDest.x, dy: realDest.y))
             
         }
          
       // 9 - Create the actions
      
-        self.run(SKAction.repeatForever(SKAction.sequence([action1,SKAction.wait(forDuration: 0.5)])))
+        self.run(SKAction.repeatForever(SKAction.sequence([action1,SKAction.wait(forDuration: 0.35)])))
     }
     
     

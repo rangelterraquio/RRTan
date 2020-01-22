@@ -62,15 +62,17 @@ class GameLayer: SKNode{
             let node = Enemy()
             node.life = arc4random() % node.lifeRange + 1
             node.color = node.colors.randomElement()!
-            node.colorBlendFactor = 1.0
+            node.colorBlendFactor = 0.6
             
-
-            var xPos = CGFloat.random(in: self.screenSize.width...self.screenSize.width*1.5)
-            xPos *= CGFloat(Int.random(in: -1...1))
-            let yPos = CGFloat.random(in: -self.screenSize.height...self.screenSize.height)
+            let signNumber: [CGFloat] = [-1,1]
+            var xPos = CGFloat.random(in: self.screenSize.width...self.screenSize.width*1.2)
+            xPos *= signNumber.randomElement()!
+            var yPos = CGFloat.random(in: self.screenSize.height...self.screenSize.height*1.2)
+            yPos *= signNumber.randomElement()!
             node.position = CGPoint(x: xPos, y: yPos)
+            node.zPosition = -1
             self.addChild(node)
-            let action2 = SKAction.move(to: self.character.position, duration: 20)
+            let action2 = SKAction.move(to: self.character.position, duration: 30)
             node.run(action2)
         }
         let sequece = SKAction.sequence([action1,SKAction.wait(forDuration: 2.5)])
