@@ -14,8 +14,15 @@ class Character: SKSpriteNode{
     
   var vector: CGVector = CGVector(dx: 10, dy: 10)
   var shootColor = UIColor.blue
-  var shootingsPerSecond: CGFloat = 0.25
-  
+  var shootingsPerSecond: CGFloat = 0.17
+    
+    
+   let jtBack: SKSpriteNode = SKSpriteNode(imageNamed: "Joystick_Drt_01") //(imageNamed: "Joystick_Drt_01")
+   let jtButtom: SKSpriteNode = SKSpriteNode(imageNamed: "Joystick_Drt_02")//(imageNamed: "Joystick_Drt_02")
+   var joyStickAngle: CGFloat = 0.0
+   var velocityX: CGFloat = 0.0
+   var velocityY: CGFloat = 0.0
+    
     init() {
         let texture = SKTexture(imageNamed: "elephant")
         super.init(texture: texture, color: .clear, size: texture.size())
@@ -89,14 +96,21 @@ class Character: SKSpriteNode{
     
     
     func moveCharacter(pos: CGPoint){
+        // to criando um vetor subtraindo o centro do meu joystick da localização do toque
+       let vector2 = CGVector(dx: pos.x - self.jtBack.position.x, dy: pos.y - self.jtBack.position.y)
+       
+       // atraves do vetor achamos o angulo q faz em relação ao eixo
+       self.joyStickAngle = atan2(vector2.dy, vector2.dx)
+        
         self.vector = CGVector(dx: pos.x - self.position.x, dy: pos.y - self.position.y)
         
         let angle = atan2(vector.dy, vector.dx)
         
-        self.zRotation = angle + CGFloat(90).degreesToradius()
-        
+        //self.zRotation = angle + CGFloat(90).degreesToradius()
+        self.zRotation = joyStickAngle + CGFloat(90).degreesToradius()
         
 
+        self.vector = vector2
 
         // Normalize the components
         let magnitude = sqrt(self.vector.dx*self.vector.dx+self.vector.dy*self.vector.dy)
@@ -108,8 +122,40 @@ class Character: SKSpriteNode{
 //
 //        // Apply impulse
 //        projectile.physicsBody?.applyImpulse(vector)
+//         self.joyStickAngle = atan2(vector.dy, vector.dx)
+     
+//        self.zRotation = joyStickAngle
+            //descobrir a distancia do toque com relação ao centro
+            let distanceFromCenter = CGFloat((self.jtBack.frame.size.height/2))
+            
+            // calculo até onde o botão do centro pode ir (aqui onde eu irei fazer ele andar só pros lado; esse pi ajusta o problea de o joyStick
+            // quando chega na ponta volta
+            let distanceX = CGFloat(sin(self.joyStickAngle - CGFloat(Double.pi/2)) * distanceFromCenter)
+            let distanceY = CGFloat(cos(self.joyStickAngle - CGFloat(Double.pi/2)) * distanceFromCenter)
+            
+            // faço o tratamento dessa posiçao
+            if self.jtBack.frame.contains(pos){
+                self.jtButtom.position = pos
+            }else {
+                jtButtom.position = CGPoint(x: self.jtBack.position.x - distanceX, y: self.jtBack.position.y + distanceY)
+            }
+            
+    //        if aimTouched {
+    //            self.jtButtom.position = touchLocation
+    //        }
+
+            // seta valecidade q o  personagem vai se mover
+            self.velocityX = (self.jtButtom.position.x - self.jtBack.position.x)/5
+            self.velocityY = (self.jtButtom.position.y - self.jtBack.position.y)/5
 //
-       
     }
+    
+    func jsMovementIsOver(){
+          let action = SKAction.move(to: CGPoint(x: self.jtBack.position.x, y: self.jtBack.position.y), duration: 0.1)
+          action.timingMode = .linear
+          self.jtButtom.run(action)
+          self.velocityX = 0.0
+          self.velocityY = 0.0
+      }
     
 }

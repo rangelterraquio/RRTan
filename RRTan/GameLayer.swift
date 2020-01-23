@@ -14,7 +14,7 @@ class GameLayer: SKNode{
     let character = Character()
     let screenSize = UIScreen.main.bounds
     
-    var spawnEnemyVelocity: TimeInterval = 2.5
+    var spawnEnemyVelocity: TimeInterval = 2.2
     var lifeEnemyIncrease: UInt32 = 1
     
     override init() {
@@ -41,7 +41,7 @@ class GameLayer: SKNode{
     }
     
     func touchUp(atPoint pos : CGPoint) {
-        
+        character.jsMovementIsOver()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

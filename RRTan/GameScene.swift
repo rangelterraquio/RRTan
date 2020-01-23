@@ -20,8 +20,12 @@ class GameScene: SKScene {
         self.physicsWorld.contactDelegate = self
         self.backgroundColor = .gray
         self.addChild(gameLayer)
+        self.addChild(gameLayer.character.jtButtom)
+        self.addChild(gameLayer.character.jtBack)
         
         
+        gameLayer.character.jtButtom.position = CGPoint(x: 0, y: -screenSize.height/2 * 0.9)
+        gameLayer.character.jtBack.position = CGPoint(x: 0, y: -screenSize.height/2 * 0.9)
         hudLayer.delegate = self
         self.addChild(hudLayer)
         
@@ -103,19 +107,35 @@ extension GameScene:SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
         
         if contact.bodyA.categoryBitMask == PhysicsCategory.projectil || contact.bodyB.categoryBitMask == PhysicsCategory.projectil{
-            if contact.bodyA.node?.name == "character" || contact.bodyB.node?.name == "character"{
-                print("morreu")
-            }
+
             if let node = contact.bodyA.node as? Enemy{
                 if node.color == gameLayer.character.shootColor{
                     node.life -= 1
                     node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                }else{
+                    let action = SKAction.run {
+                        node.speed = 0.5
+                    }
+                    let action2 = SKAction.run {
+                        node.speed = 1
+                    }
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.8),action2])
+                    node.run(sequece)
                 }
             }
             if let node = contact.bodyB.node as? Enemy{
                 if node.color == gameLayer.character.shootColor{
                     node.life -= 1
                     node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                }else{
+                    let action = SKAction.run {
+                        node.speed = 0.5
+                    }
+                    let action2 = SKAction.run {
+                        node.speed = 1
+                    }
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.8),action2])
+                    node.run(sequece)
                 }
             }
         }
