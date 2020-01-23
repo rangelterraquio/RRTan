@@ -14,8 +14,9 @@ class Character: SKSpriteNode{
     
   var vector: CGVector = CGVector(dx: 10, dy: 10)
   var shootColor = UIColor.blue
-
-  init() {
+  var shootingsPerSecond: CGFloat = 0.25
+  
+    init() {
         let texture = SKTexture(imageNamed: "elephant")
         super.init(texture: texture, color: .clear, size: texture.size())
         self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
@@ -43,8 +44,6 @@ class Character: SKSpriteNode{
             }
             
             
-   
-
             
             
              let node = SKShapeNode(circleOfRadius: 15)
@@ -59,7 +58,7 @@ class Character: SKSpriteNode{
             node.position = self.position
             node.name = "projectil"
               
-            print("vector \(self.vector)")
+        
             let position = CGPoint(x: self.vector.dx * 10, y: self.vector.dy * 10)
             // 3 - Determine offset of location to projectile
             let offset = position - node.position
@@ -85,7 +84,7 @@ class Character: SKSpriteNode{
          
       // 9 - Create the actions
      
-        self.run(SKAction.repeatForever(SKAction.sequence([action1,SKAction.wait(forDuration: 0.35)])))
+        self.run(SKAction.repeatForever(SKAction.sequence([action1,SKAction.wait(forDuration: TimeInterval(shootingsPerSecond))])))
     }
     
     

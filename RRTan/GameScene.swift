@@ -84,6 +84,11 @@ class GameScene: SKScene {
 //HUD delegate
 
 extension GameScene: HudDelegate{
+    
+    func updateDifficult() {
+        gameLayer.updateGameDifficult()
+    }
+    
     func menuColors(color: UIColor){
         gameLayer.character.shootColor = color
     }
@@ -104,12 +109,13 @@ extension GameScene:SKPhysicsContactDelegate{
             if let node = contact.bodyA.node as? Enemy{
                 if node.color == gameLayer.character.shootColor{
                     node.life -= 1
+                    node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
                 }
             }
             if let node = contact.bodyB.node as? Enemy{
                 if node.color == gameLayer.character.shootColor{
                     node.life -= 1
-                    
+                    node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
                 }
             }
         }
@@ -122,5 +128,18 @@ extension GameScene:SKPhysicsContactDelegate{
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
          }
+        
+         if contact.bodyA.categoryBitMask == PhysicsCategory.collectible || contact.bodyB.categoryBitMask == PhysicsCategory.collectible{
+            if let node = contact.bodyA.node as? UpLevel{
+                node.life -= 1
+                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : gameLayer.character.shootingsPerSecond
+            }
+            if let node = contact.bodyB.node as? UpLevel{
+                node.life -= 1
+                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : gameLayer.character.shootingsPerSecond
+            }
+         }
+        
+        
     }
 }

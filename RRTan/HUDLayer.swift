@@ -60,7 +60,8 @@ class HUDLayer: SKNode {
     }
     
     func updateScore(){
-        self.score.text = "\(scoreInt+=1)"
+        self.scoreInt += 1
+        self.score.text = "\(scoreInt)"
     }
     
     
@@ -95,4 +96,5 @@ class HUDLayer: SKNode {
 
 protocol HudDelegate{
     func menuColors(color: UIColor)
+    func updateDifficult()
 }

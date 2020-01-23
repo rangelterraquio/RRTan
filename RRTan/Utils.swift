@@ -14,7 +14,7 @@ struct PhysicsCategory{
     static let projectil   : UInt32  = 1
     static let enemies     : UInt32  = 2
     static let character   : UInt32  = 4
-    static let objectBomb  : UInt32  = 5
+    static let collectible  : UInt32  = 6
 }
 
 
