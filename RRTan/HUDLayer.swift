@@ -21,18 +21,72 @@ class HUDLayer: SKNode {
     var blueButton: SKShapeNode! = nil
     
     //score
+    var scoreControl = 18
     let score = SKLabelNode(text: "0")
-    var scoreInt = 0
+    var scoreInt = 0 {
+        didSet{
+            if scoreInt == scoreControl{
+                delegate?.updateDifficult()
+                scoreControl += 18
+            }
+        }
+    }
+    
+    //pause Menu
+    let shadowNode = SKShapeNode(rect: CGRect(x: -0.5, y: -0.5, width: UIScreen.main.bounds.width*2, height: UIScreen.main.bounds.height*2))
+    let playButton = SKSpriteNode(imageNamed: "PlayButton")
+    let pauseButton = SKSpriteNode(imageNamed: "pauseButton")
+    let pauseLabel = SKLabelNode(text: "pause")
+    
+    //Special nodes
+   let progressBar = ProgressBar(textureBackground: "bgprogress", textureBar: "bar")
+    
+    
     override init() {
         super.init()
         setupColorsMenu()
         
+        //score
         self.score.color = .black
         self.score.fontSize = 60
         self.score.colorBlendFactor = 1.0
         self.score.position = CGPoint(x: 0, y: screenSize.height * 1.2)
         self.addChild(score)
         
+        //pause nodes
+        pauseButton.position = CGPoint(x:  -250 , y: screenSize.height * 1.25)
+        pauseButton.name = "pauseButton"
+        pauseButton.zPosition = 2
+        self.addChild(pauseButton)
+        
+        shadowNode.fillColor = .black
+        shadowNode.alpha = 0.6
+        shadowNode.position = CGPoint(x: -screenSize.width, y: 0 + -screenSize.height/2 * 0.8)
+        shadowNode.isHidden = true
+        shadowNode.zPosition = 3
+        self.addChild(shadowNode)
+        
+        playButton.position = CGPoint(x: 0, y: 200)
+        playButton.name = "pauseButton"
+        playButton.isHidden = true
+        playButton.zPosition = 4
+        self.addChild(playButton)
+        
+        pauseLabel.position = CGPoint(x:  0 , y: screenSize.height * 0.8)
+        pauseLabel.fontColor = .white
+        pauseLabel.fontSize = 80
+        pauseLabel.isHidden = true
+        pauseLabel.zPosition = 3
+        self.addChild(pauseLabel)
+        
+        
+        //special
+        progressBar.position = CGPoint(x: 250, y: screenSize.height * 0.7)
+        progressBar.zRotation = CGFloat(90).degreesToradius()
+        progressBar.fullProgress = {
+            self.delegate?.specialPower()
+        }
+        self.addChild(progressBar)
     }
     
     private func setupColorsMenu(){
@@ -59,6 +113,21 @@ class HUDLayer: SKNode {
      
     }
     
+    private func setupPauseMenu(){
+        
+        shadowNode.isHidden = false
+        playButton.isHidden = false
+        pauseButton.isHidden = true
+        pauseLabel.isHidden = false
+    }
+    
+    private func unsetupPauseMenu(){
+        shadowNode.isHidden = true
+        playButton.isHidden = true
+        pauseButton.isHidden = false
+        pauseLabel.isHidden = true
+    }
+    
     func updateScore(){
         self.scoreInt += 1
         self.score.text = "\(scoreInt)"
@@ -81,6 +150,16 @@ class HUDLayer: SKNode {
             if greenButton.contains(location){ delegate?.menuColors(color: .green)}
             if blueButton.contains(location){  delegate?.menuColors(color: .blue)}
             
+            if pauseButton.contains(location){
+                self.setupPauseMenu()
+                self.delegate?.pauseGame()
+            }
+            
+            if playButton.contains(location){
+                self.unsetupPauseMenu()
+                self.delegate?.resumeGame()
+            }
+            
         }
     }
     
@@ -97,4 +176,7 @@ class HUDLayer: SKNode {
 protocol HudDelegate{
     func menuColors(color: UIColor)
     func updateDifficult()
+    func pauseGame()
+    func resumeGame()
+    func specialPower()
 }

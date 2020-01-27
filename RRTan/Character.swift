@@ -15,8 +15,6 @@ class Character: SKSpriteNode{
   var vector: CGVector = CGVector(dx: 10, dy: 10)
   var shootColor = UIColor.blue
   var shootingsPerSecond: CGFloat = 0.17
-    
-    
    let jtBack: SKSpriteNode = SKSpriteNode(imageNamed: "Joystick_Drt_01") //(imageNamed: "Joystick_Drt_01")
    let jtButtom: SKSpriteNode = SKSpriteNode(imageNamed: "Joystick_Drt_02")//(imageNamed: "Joystick_Drt_02")
    var joyStickAngle: CGFloat = 0.0
@@ -28,7 +26,7 @@ class Character: SKSpriteNode{
         super.init(texture: texture, color: .clear, size: texture.size())
         self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 100, height: 100))
         self.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
-        self.physicsBody?.collisionBitMask = PhysicsCategory.enemies
+        self.physicsBody?.collisionBitMask = PhysicsCategory.None
         self.physicsBody?.categoryBitMask = PhysicsCategory.character
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.mass = 100
@@ -41,7 +39,7 @@ class Character: SKSpriteNode{
     }
     
     
-    func shooting(layer: GameLayer){
+    func shooting(layer: SKNode){
         var realDest: CGPoint = CGPoint.zero
       
         let action1 = SKAction.run {[weak self] in
@@ -56,8 +54,8 @@ class Character: SKSpriteNode{
              let node = SKShapeNode(circleOfRadius: 15)
              node.fillColor = self.shootColor
             node.physicsBody = SKPhysicsBody(circleOfRadius:15)
-            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies
-            node.physicsBody?.collisionBitMask = PhysicsCategory.enemies
+            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
+            node.physicsBody?.collisionBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
             node.physicsBody?.categoryBitMask = PhysicsCategory.projectil
             node.physicsBody?.mass = 0.01
             node.physicsBody?.restitution = 1.0
@@ -92,6 +90,30 @@ class Character: SKSpriteNode{
       // 9 - Create the actions
      
         self.run(SKAction.repeatForever(SKAction.sequence([action1,SKAction.wait(forDuration: TimeInterval(shootingsPerSecond))])))
+    }
+    
+    func specialPower(){
+       // self.removeAllActions()
+        let node = SKShapeNode(rectOf: CGSize(width: 50, height: UIScreen.main.bounds.height*1.65))
+        node.fillColor = .black
+        node.physicsBody = SKPhysicsBody(rectangleOf: node.frame.size)
+        node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
+        node.physicsBody?.collisionBitMask = PhysicsCategory.None
+        node.physicsBody?.categoryBitMask = PhysicsCategory.specialPower
+//        node.physicsBody?.mass = 10
+//        node.physicsBody?.restitution = 0.4
+        node.physicsBody?.usesPreciseCollisionDetection = true
+        node.physicsBody?.affectedByGravity = false
+        node.physicsBody?.isDynamic = true
+        node.name = "specialPower"
+        node.position = CGPoint(x: 0, y: -node.frame.height/2)
+        self.addChild(node)
+        self.removeAllActions()
+
+        self.run(SKAction.sequence([SKAction.wait(forDuration: 10)])) {
+            node.removeFromParent()
+            self.shooting(layer: self.parent!)
+        }
     }
     
     

@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7070D5D023D91FBE00BD8BCD /* UpLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5CF23D91FBE00BD8BCD /* UpLevel.swift */; };
+		7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5CF23D91FBE00BD8BCD /* Collectable.swift */; };
 		7070D5D223D9205200BD8BCD /* ItemGameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */; };
+		7088901023DA1C4E007CBEA3 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */; };
 		70A06E2323D736800054C127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A06E2223D736800054C127 /* AppDelegate.swift */; };
 		70A06E2523D736800054C127 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 70A06E2423D736800054C127 /* GameScene.sks */; };
 		70A06E2723D736800054C127 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 70A06E2623D736800054C127 /* Actions.sks */; };
@@ -25,8 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7070D5CF23D91FBE00BD8BCD /* UpLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpLevel.swift; sourceTree = "<group>"; };
+		7070D5CF23D91FBE00BD8BCD /* Collectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectable.swift; sourceTree = "<group>"; };
 		7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGameProtocol.swift; sourceTree = "<group>"; };
+		7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		70A06E1F23D736800054C127 /* RRTan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRTan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A06E2223D736800054C127 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70A06E2423D736800054C127 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -88,8 +90,9 @@
 				70A06E3423D736840054C127 /* Info.plist */,
 				70EEB20723D76A6C00D0FD26 /* Utils.swift */,
 				70EEB20F23D7D7D700D0FD26 /* Enemy.swift */,
-				7070D5CF23D91FBE00BD8BCD /* UpLevel.swift */,
+				7070D5CF23D91FBE00BD8BCD /* Collectable.swift */,
 				7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */,
+				7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */,
 			);
 			path = RRTan;
 			sourceTree = "<group>";
@@ -170,12 +173,13 @@
 				70A06E2923D736800054C127 /* GameScene.swift in Sources */,
 				70EEB20C23D7894900D0FD26 /* GameLayer.swift in Sources */,
 				7070D5D223D9205200BD8BCD /* ItemGameProtocol.swift in Sources */,
-				7070D5D023D91FBE00BD8BCD /* UpLevel.swift in Sources */,
+				7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */,
 				70A06E2B23D736800054C127 /* GameViewController.swift in Sources */,
 				70EEB20E23D7C34C00D0FD26 /* HUDLayer.swift in Sources */,
 				70EEB20A23D783F000D0FD26 /* Character.swift in Sources */,
 				70A06E2323D736800054C127 /* AppDelegate.swift in Sources */,
 				70EEB21023D7D7D700D0FD26 /* Enemy.swift in Sources */,
+				7088901023DA1C4E007CBEA3 /* ProgressBar.swift in Sources */,
 				70EEB20823D76A6C00D0FD26 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

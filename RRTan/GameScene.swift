@@ -16,6 +16,7 @@ class GameScene: SKScene {
     let hudLayer: HUDLayer = HUDLayer()
     let screenSize = UIScreen.main.bounds
     
+    var isNodesInContact = true
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         self.backgroundColor = .gray
@@ -88,6 +89,14 @@ class GameScene: SKScene {
 //HUD delegate
 
 extension GameScene: HudDelegate{
+    func pauseGame() {
+        gameLayer.pauseGame()
+    }
+    
+    func resumeGame() {
+        gameLayer.resumeGame()
+    }
+    
     
     func updateDifficult() {
         gameLayer.updateGameDifficult()
@@ -95,6 +104,11 @@ extension GameScene: HudDelegate{
     
     func menuColors(color: UIColor){
         gameLayer.character.shootColor = color
+    }
+    
+    func specialPower() {
+        gameLayer.character.specialPower()
+        gameLayer.invalidateSpawnSpecial()
     }
     
     
@@ -105,41 +119,60 @@ extension GameScene: HudDelegate{
 //Physics
 extension GameScene:SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        
-        if contact.bodyA.categoryBitMask == PhysicsCategory.projectil || contact.bodyB.categoryBitMask == PhysicsCategory.projectil{
+
+        if contact.bodyA.categoryBitMask == PhysicsCategory.projectil || contact.bodyB.categoryBitMask == PhysicsCategory.projectil || contact.bodyA.categoryBitMask == PhysicsCategory.specialPower || contact.bodyB.categoryBitMask == PhysicsCategory.specialPower{
 
             if let node = contact.bodyA.node as? Enemy{
-                if node.color == gameLayer.character.shootColor{
-                    node.life -= 1
-                    node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
+            
+                if contact.bodyA.node?.name == "specialPower"{
+                    let action = SKAction.run {
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                    }
+                    node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
+                }else if node.color == gameLayer.character.shootColor{
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                }else if node.name == "triangle"{
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
                 }else{
                     let action = SKAction.run {
-                        node.speed = 0.5
-                    }
-                    let action2 = SKAction.run {
-                        node.speed = 1
-                    }
-                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.8),action2])
-                    node.run(sequece)
+                          node.speed = 0.2
+                      }
+                      let action2 = SKAction.run {
+                          node.speed = 1
+                      }
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.7),action2])
+                      node.run(sequece)
                 }
             }
             if let node = contact.bodyB.node as? Enemy{
-                if node.color == gameLayer.character.shootColor{
-                    node.life -= 1
-                    node.life == 0 ? hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                if contact.bodyA.node?.name == "specialPower"{
+                    let action = SKAction.run {
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                    }
+                    node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
+                }else if node.color == gameLayer.character.shootColor{
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                }else if node.name == "trangle"{
+                        node.life -= 1
+                        node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
                 }else{
                     let action = SKAction.run {
-                        node.speed = 0.5
+                        node.speed = 0.2
                     }
                     let action2 = SKAction.run {
                         node.speed = 1
                     }
-                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.8),action2])
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.7),action2])
                     node.run(sequece)
                 }
             }
         }
-        
+
          if contact.bodyA.categoryBitMask == PhysicsCategory.character || contact.bodyB.categoryBitMask == PhysicsCategory.character{
             self.isPaused = true
             let node  = SKLabelNode(text: "VC MORREU")
@@ -148,18 +181,57 @@ extension GameScene:SKPhysicsContactDelegate{
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
          }
-        
+
          if contact.bodyA.categoryBitMask == PhysicsCategory.collectible || contact.bodyB.categoryBitMask == PhysicsCategory.collectible{
-            if let node = contact.bodyA.node as? UpLevel{
+            
+            
+            if contact.bodyA.node?.name == "specialPower"{
+                if let node = contact.bodyB.node as? Collectable{
+                    let action = SKAction.run {
+                       node.life -= 1
+                       node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                     }
+                node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
+                }
+            }else if contact.bodyB.node?.name == "specialPower"{
+                if let node = contact.bodyA.node as? Collectable{
+                    let action = SKAction.run {
+                           node.life -= 1
+                           node.life == 0 ? self.hudLayer.updateScore() : print("vamos arrumar isso rangel")
+                         }
+                node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
+                }
+            } else if let node = contact.bodyA.node as? Collectable, node.name == "levelUP"{
                 node.life -= 1
-                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : gameLayer.character.shootingsPerSecond
+                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : 0
+            }else if let node = contact.bodyA.node as? Collectable, node.name == "specialPower"{
+               node.life -= 1
+               if node.life == 0 { hudLayer.progressBar.progress += 0.35 }
             }
-            if let node = contact.bodyB.node as? UpLevel{
+            if let node = contact.bodyB.node as? Collectable, node.name == "levelUP"{
                 node.life -= 1
-                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : gameLayer.character.shootingsPerSecond
+                gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : 0
+            }else if let node = contact.bodyA.node as? Collectable, node.name == "specialPower"{
+                 node.life -= 1
+                if node.life == 0 { hudLayer.progressBar.progress += 0.35 }
             }
          }
+
+
+    }
+    
+    func didEnd(_ contact: SKPhysicsContact) {
         
-        
+        contact.bodyA.node?.removeAction(forKey: "killingAction")
+        contact.bodyB.node?.removeAction(forKey: "killingAction")
     }
 }
+
+//extension GameScene:SKPhysicsContactDelegate{
+//    func didBegin(_ contact: SKPhysicsContact) {
+//
+//        let colision = contact.bodyA.categoryBitMask | contact.bodyB.co
+//
+//
+//    }
+//}

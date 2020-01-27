@@ -17,13 +17,23 @@ class GameLayer: SKNode{
     var spawnEnemyVelocity: TimeInterval = 2.2
     var lifeEnemyIncrease: UInt32 = 1
     
+    var timer: Timer!
+    var timerSpecialPower: Timer!
+    var timerSpawn: TimeInterval = 0
+    var currentTime: TimeInterval = 0
+    
+    //com essas 2 properties eu verifico se tinha um coletável na hora q o jogador pressionou pause
+    var isCollectibleActive = false
+    var isSpecialPowerActive = false
+    
     override init() {
         super.init()
         character.position = CGPoint.zero
         character.shooting(layer: self)
         self.addChild(character)
         spawnEnemies()
-        spawnUpLevel()
+        spawnUpLevel(timeInterval: 21)
+        spawnSpecialPower(timeInterval: TimeInterval.random(in: 20...35))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -66,18 +76,50 @@ class GameLayer: SKNode{
     }
     
     
-    func spawnUpLevel(){
-        let _ = Timer.scheduledTimer(withTimeInterval: 20, repeats: true) { (_) in
-            let node = UpLevel()
+    func spawnUpLevel(timeInterval: TimeInterval){
+        var node: Collectable!
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { (time) in
+            node = Collectable(textureName: "levelUP")
+            self.isCollectibleActive = true
             let xPos = CGFloat.random(in: -self.screenSize.width*0.8...self.screenSize.width*0.8)
             let yPos = CGFloat.random(in: -self.screenSize.height*0.8...self.screenSize.height*0.8)
             node.position = CGPoint(x: xPos, y: yPos)
             node.life = Int(arc4random()) % node.lifeRange
+            node.name = "levelUP"
             self.addChild(node)
+            
+            let timer = Timer.scheduledTimer(withTimeInterval: 13, repeats: false) { (timer) in
+                node.removeFromParent()
+                timer.invalidate()
+                self.isCollectibleActive = false
+                self.timerSpawn = 20
+            }
+            
         }
     
     }
     
+    func spawnSpecialPower(timeInterval: TimeInterval){
+        var node: Collectable!
+        timerSpecialPower = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { (time) in
+            node = Collectable(textureName: "specialPower")
+            self.isSpecialPowerActive = true
+            let xPos = CGFloat.random(in: -self.screenSize.width*0.8...self.screenSize.width*0.8)
+            let yPos = CGFloat.random(in: -self.screenSize.height*0.8...self.screenSize.height*0.8)
+            node.position = CGPoint(x: xPos, y: yPos)
+            node.life = Int(arc4random()) % node.lifeRange
+            node.name = "specialPower"
+            self.addChild(node)
+            
+            let timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { (timer) in
+                node.removeFromParent()
+                timer.invalidate()
+                self.isSpecialPowerActive = false
+            }
+            
+        }
+    
+    }
     func spawnEnemies(){
         let action1 = SKAction.run {
             let node = Enemy()
@@ -96,9 +138,59 @@ class GameLayer: SKNode{
             let action2 = SKAction.move(to: self.character.position, duration: 40)
             node.run(action2)
         }
-        let sequece = SKAction.sequence([action1,SKAction.wait(forDuration: spawnEnemyVelocity)])
-        self.run(SKAction.repeatForever(sequece))
+        
+        let action2 = SKAction.run {
+            let node = Enemy(triangle: "triangle")
+            node.life = arc4random() % node.lifeRange + self.lifeEnemyIncrease + 1
+          
+            let signNumber: [CGFloat] = [-1,1]
+            var xPos = CGFloat.random(in: self.screenSize.width...self.screenSize.width*1.2)
+            xPos *= signNumber.randomElement()!
+            var yPos = CGFloat.random(in: -self.screenSize.height*1.2...self.screenSize.height*1.2)
+            yPos *= signNumber.randomElement()!
+            node.position = CGPoint(x: xPos, y: yPos)
+            node.zPosition = -1
+            self.addChild(node)
+            let action2 = SKAction.move(to: self.character.position, duration: 35)
+            let action3 = SKAction.rotate(byAngle: CGFloat(360).degreesToradius(), duration: 5)
+            let repeatForever = SKAction.repeatForever(action3)
+            node.run(SKAction.group([action2,repeatForever]))
+        }
+        let sequece1 = SKAction.sequence([action1,SKAction.wait(forDuration: spawnEnemyVelocity)])
+        self.run(SKAction.repeatForever(sequece1))
+        let sequece2 = SKAction.sequence([action2,SKAction.wait(forDuration: spawnEnemyVelocity * 1.8)])
+        self.run(SKAction.repeatForever(sequece2))
     }
     
+    
+    func invalidateSpawnSpecial(){
+        self.timerSpecialPower.invalidate()
+        self.timerSpecialPower = nil
+        
+        self.run(SKAction.wait(forDuration: 10)) {
+            self.spawnSpecialPower(timeInterval: TimeInterval.random(in: 21...35))
+        }
+    }
+    func pauseGame(){
+        self.isPaused = true
+        self.timer.invalidate()
+        self.timer = nil
+        self.timerSpecialPower.invalidate()
+        self.timerSpecialPower = nil
+    }
+    
+    func resumeGame(){
+        self.isPaused = false
+        if self.isCollectibleActive {
+            spawnUpLevel(timeInterval: 1)
+        }else{
+            spawnUpLevel(timeInterval: 21)
+        }
+        if self.isSpecialPowerActive{
+            spawnSpecialPower(timeInterval: 1)
+        }else{
+            spawnSpecialPower(timeInterval: TimeInterval.random(in: 21...40))
+        }
+    }
     
 }

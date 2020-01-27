@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class UpLevel: SKSpriteNode{
+class Collectable: SKSpriteNode{
     
     var life: Int = 1{
         didSet{
@@ -20,14 +20,14 @@ class UpLevel: SKSpriteNode{
     }
     var lifeRange: Int = 10
     
-    init() {
-        let texture = SKTexture(imageNamed: "levelUP")
+    init(textureName: String) {
+        let texture = SKTexture(imageNamed: textureName)
         super.init(texture: texture, color: .clear, size: texture.size())
-        self.physicsBody = SKPhysicsBody(circleOfRadius: 25)
+        self.physicsBody = textureName == "levelUP" ? SKPhysicsBody(circleOfRadius: 25) : SKPhysicsBody(rectangleOf: texture.size())
         self.physicsBody?.affectedByGravity = false
         self.physicsBody?.mass = 30
         self.physicsBody?.collisionBitMask = PhysicsCategory.projectil
-        self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil
+        self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil | PhysicsCategory.specialPower
         self.physicsBody?.categoryBitMask = PhysicsCategory.collectible
     }
     
