@@ -38,6 +38,12 @@ class HUDLayer: SKNode {
     let pauseButton = SKSpriteNode(imageNamed: "pauseButton")
     let pauseLabel = SKLabelNode(text: "pause")
     
+    
+    //end game menu
+    let playAgain = SKSpriteNode(imageNamed: "PlayButton")
+    
+    
+    
     //Special nodes
    let progressBar = ProgressBar(textureBackground: "bgprogress", textureBar: "bar")
     
@@ -110,9 +116,26 @@ class HUDLayer: SKNode {
         redButton.name = "redButton"
         self.addChild(redButton)
         
+        //end game menu
+        
+        playAgain.position = CGPoint(x: 0, y: 250)
+        playAgain.name = "playAgain"
+        playAgain.isHidden = true
+        playAgain.zPosition = 4
+        self.addChild(playAgain)
+
      
     }
-    
+    func setupEndGameMenu(){
+        let action = SKAction.run {
+          
+        }
+        self.run(SKAction.sequence([SKAction.wait(forDuration: 2.5),action]))
+        self.shadowNode.isHidden = false
+        self.playAgain.isHidden = false
+        self.pauseButton.isHidden = true
+    }
+       
     private func setupPauseMenu(){
         
         shadowNode.isHidden = false
@@ -160,6 +183,9 @@ class HUDLayer: SKNode {
                 self.delegate?.resumeGame()
             }
             
+            if playAgain.contains(location){
+               //self.delegate?.restartGame()
+            }
         }
     }
     
@@ -179,4 +205,5 @@ protocol HudDelegate{
     func pauseGame()
     func resumeGame()
     func specialPower()
+    func restartGame()
 }

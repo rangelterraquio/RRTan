@@ -111,6 +111,11 @@ extension GameScene: HudDelegate{
         gameLayer.invalidateSpawnSpecial()
     }
     
+    func restartGame() {
+        let scene = GameScene(size: self.size)
+        scene.scaleMode = .aspectFill
+        self.view?.presentScene(scene)
+    }
     
 }
 
@@ -180,6 +185,7 @@ extension GameScene:SKPhysicsContactDelegate{
             node.fontColor = .green
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
+            self.hudLayer.setupEndGameMenu()
          }
 
          if contact.bodyA.categoryBitMask == PhysicsCategory.collectible || contact.bodyB.categoryBitMask == PhysicsCategory.collectible{

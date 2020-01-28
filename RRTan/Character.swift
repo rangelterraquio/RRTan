@@ -20,7 +20,8 @@ class Character: SKSpriteNode{
    var joyStickAngle: CGFloat = 0.0
    var velocityX: CGFloat = 0.0
    var velocityY: CGFloat = 0.0
-    
+    var projectil : SKShapeNode!
+    var isProjectilVisisble = false
     init() {
         let texture = SKTexture(imageNamed: "elephant")
         super.init(texture: texture, color: .clear, size: texture.size())
@@ -51,25 +52,26 @@ class Character: SKSpriteNode{
             
             
             
-             let node = SKShapeNode(circleOfRadius: 15)
-             node.fillColor = self.shootColor
-            node.physicsBody = SKPhysicsBody(circleOfRadius:15)
-            node.physicsBody?.contactTestBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
-            node.physicsBody?.collisionBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
-            node.physicsBody?.categoryBitMask = PhysicsCategory.projectil
-            node.physicsBody?.mass = 0.01
-            node.physicsBody?.restitution = 1.0
-            node.physicsBody?.affectedByGravity = false
-            node.position = self.position
-            node.name = "projectil"
+            self.projectil = SKShapeNode(circleOfRadius: 15)
+            self.projectil.fillColor = self.shootColor
+            self.projectil.physicsBody = SKPhysicsBody(circleOfRadius:15)
+            self.projectil.physicsBody?.contactTestBitMask = PhysicsCategory.enemies | PhysicsCategory.projectil
+            self.projectil.physicsBody?.collisionBitMask = PhysicsCategory.enemies | PhysicsCategory.collectible
+            self.projectil.physicsBody?.categoryBitMask = PhysicsCategory.projectil
+            self.projectil.physicsBody?.mass = 0.01
+            self.projectil.physicsBody?.restitution = 1.0
+            self.projectil.physicsBody?.affectedByGravity = false
+            self.projectil.position = self.position
+            self.projectil.name = "projectil"
+            self.projectil.isHidden = self.isProjectilVisisble
               
         
             let position = CGPoint(x: self.vector.dx * 10, y: self.vector.dy * 10)
             // 3 - Determine offset of location to projectile
-            let offset = position - node.position
+            let offset = position - self.projectil.position
             
             // 5 - OK to add now - you've double checked position
-            layer.addChild(node)
+            layer.addChild(self.projectil)
             
             // 6 - Get the direction of where to shoot
             let direction = offset.normalized()
@@ -83,7 +85,7 @@ class Character: SKSpriteNode{
 //            let actionMoveDone = SKAction.removeFromParent()
 //            let sequece = SKAction.sequence([actionMove, actionMoveDone])
 //            node.run(sequece)
-            node.physicsBody?.applyImpulse(CGVector(dx: self.vector.dx * 14, dy:  self.vector.dy * 14))//applyImpulse(CGVector(dx: realDest.x, dy: realDest.y))
+            self.projectil.physicsBody?.applyImpulse(CGVector(dx: self.vector.dx * 14, dy:  self.vector.dy * 14))//applyImpulse(CGVector(dx: realDest.x, dy: realDest.y))
             
         }
          
@@ -108,11 +110,13 @@ class Character: SKSpriteNode{
         node.name = "specialPower"
         node.position = CGPoint(x: 0, y: -node.frame.height/2)
         self.addChild(node)
-        self.removeAllActions()
-
+//        self.removeAllActions()
+        isProjectilVisisble = !false
+        
         self.run(SKAction.sequence([SKAction.wait(forDuration: 10)])) {
             node.removeFromParent()
-            self.shooting(layer: self.parent!)
+            //self.shooting(layer: self.parent!)
+            self.isProjectilVisisble = false
         }
     }
     
