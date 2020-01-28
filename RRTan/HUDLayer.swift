@@ -41,8 +41,10 @@ class HUDLayer: SKNode {
     
     //end game menu
     let playAgain = SKSpriteNode(imageNamed: "PlayButton")
-    
-    
+    let bestScoreLabel = SKLabelNode(text: "Best Score")
+    let bestScoreIntLabel = SKLabelNode(text: "0")
+    let scoreLabel = SKLabelNode(text: "Score")
+    let scoreIntLabel = SKLabelNode(text: "0")
     
     //Special nodes
    let progressBar = ProgressBar(textureBackground: "bgprogress", textureBar: "bar")
@@ -66,7 +68,7 @@ class HUDLayer: SKNode {
         self.addChild(pauseButton)
         
         shadowNode.fillColor = .black
-        shadowNode.alpha = 0.6
+        shadowNode.alpha = 1.0
         shadowNode.position = CGPoint(x: -screenSize.width, y: 0 + -screenSize.height/2 * 0.8)
         shadowNode.isHidden = true
         shadowNode.zPosition = 3
@@ -123,8 +125,34 @@ class HUDLayer: SKNode {
         playAgain.isHidden = true
         playAgain.zPosition = 4
         self.addChild(playAgain)
-
-     
+        
+        bestScoreLabel.color = .blue
+        bestScoreLabel.colorBlendFactor = 1.0
+        bestScoreLabel.fontSize = 40
+        bestScoreLabel.position = CGPoint(x:  195 , y: screenSize.height * 1.14)
+        bestScoreLabel.isHidden = true
+        bestScoreLabel.zPosition = 10
+        self.addChild(bestScoreLabel)
+        bestScoreIntLabel.color = .white
+        bestScoreIntLabel.fontSize = 40
+        bestScoreIntLabel.position = CGPoint(x:  195 , y: screenSize.height * 1.08)
+        bestScoreIntLabel.isHidden = true
+        bestScoreIntLabel.zPosition = 10
+        self.addChild(bestScoreIntLabel)
+        
+        scoreLabel.color = .blue
+        scoreLabel.colorBlendFactor = 1.0
+        scoreLabel.fontSize = 40
+        scoreLabel.position = CGPoint(x:  -195 , y: screenSize.height * 1.14)
+        scoreLabel.isHidden = true
+        scoreLabel.zPosition = 10
+        self.addChild(scoreLabel)
+        scoreIntLabel.color = .white
+        scoreIntLabel.fontSize = 40
+        scoreIntLabel.position = CGPoint(x:  -195 , y: screenSize.height * 1.08)
+        scoreIntLabel.isHidden = true
+        scoreIntLabel.zPosition = 10
+        self.addChild(scoreIntLabel)
     }
     func setupEndGameMenu(){
         let action = SKAction.run {
@@ -134,6 +162,12 @@ class HUDLayer: SKNode {
         self.shadowNode.isHidden = false
         self.playAgain.isHidden = false
         self.pauseButton.isHidden = true
+        self.bestScoreLabel.isHidden = false
+        self.bestScoreIntLabel.isHidden = false
+        self.bestScoreIntLabel.text = "\(UserDefaults.standard.integer(forKey: "bestScore"))"
+        self.scoreLabel.isHidden = false
+        self.scoreIntLabel.isHidden = false
+        self.scoreIntLabel.text = "\(self.scoreInt)"
     }
        
     private func setupPauseMenu(){
@@ -184,7 +218,7 @@ class HUDLayer: SKNode {
             }
             
             if playAgain.contains(location){
-               //self.delegate?.restartGame()
+             self.delegate?.restartGame()
             }
         }
     }

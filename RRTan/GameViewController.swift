@@ -30,6 +30,8 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+        
+        UserDefaults.standard.register(defaults: ["bestScore" : 0])
     }
 
     override var shouldAutorotate: Bool {

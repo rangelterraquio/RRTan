@@ -171,4 +171,12 @@ class GameLayer: SKNode{
         self.isPaused = false
     }
     
+    func saveTheBestScore(score: Int){
+       
+        if UserDefaults.standard.integer(forKey: "bestScore") < score{
+            UserDefaults.standard.set(score, forKey: "bestScore")
+        }
+        
+        
+    }
 }

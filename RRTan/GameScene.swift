@@ -112,9 +112,12 @@ extension GameScene: HudDelegate{
     }
     
     func restartGame() {
-        let scene = GameScene(size: self.size)
-        scene.scaleMode = .aspectFill
-        self.view?.presentScene(scene)
+         if let scene = SKScene(fileNamed: "GameScene") {
+           // Set the scale mode to scale to fit the window
+           scene.scaleMode = .aspectFill
+           // Present the scene
+            self.view?.presentScene(scene)
+         }
     }
     
 }
@@ -185,6 +188,7 @@ extension GameScene:SKPhysicsContactDelegate{
             node.fontColor = .green
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
+            self.gameLayer.saveTheBestScore(score: self.hudLayer.scoreInt)
             self.hudLayer.setupEndGameMenu()
          }
 
