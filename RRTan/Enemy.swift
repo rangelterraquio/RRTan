@@ -27,9 +27,9 @@ class Enemy: SKSpriteNode {
     
     
     init() {
-        let texture = SKTexture(imageNamed: "square")
+        let texture = SKTexture(imageNamed: "squaree")
         super.init(texture: texture, color: .clear, size: texture.size())
-        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width/2, height: texture.size().height/2))
+        self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: texture.size().width, height: texture.size().height))
         self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil | PhysicsCategory.character | PhysicsCategory.specialPower
         self.physicsBody?.collisionBitMask = PhysicsCategory.projectil
         self.physicsBody?.categoryBitMask = PhysicsCategory.enemies
@@ -39,7 +39,7 @@ class Enemy: SKSpriteNode {
         self.setScale(0.7)
         labelLife.color = .black
         labelLife.colorBlendFactor = 1.0
-        labelLife.fontSize = 40
+        labelLife.fontSize = 60
         labelLife.position = CGPoint(x: 0.5, y: 0.5)
         self.addChild(labelLife)
     }
@@ -47,6 +47,7 @@ class Enemy: SKSpriteNode {
     init(triangle: String) {
          let texture = SKTexture(imageNamed: triangle)
          super.init(texture: texture, color: .clear, size: texture.size())
+        self.setScale(1.3)
          self.physicsBody = SKPhysicsBody(texture: texture, size: texture.size())
          self.physicsBody?.contactTestBitMask = PhysicsCategory.projectil | PhysicsCategory.character | PhysicsCategory.specialPower
          self.physicsBody?.collisionBitMask = PhysicsCategory.projectil

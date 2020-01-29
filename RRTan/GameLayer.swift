@@ -109,7 +109,7 @@ class GameLayer: SKNode{
         let action2 = SKAction.run {
             node.removeFromParent()
         }
-        let sequence = SKAction.sequence([SKAction.wait(forDuration: TimeInterval.random(in: 23...35)),action1, SKAction.wait(forDuration: 9),action2])
+        let sequence = SKAction.sequence([SKAction.wait(forDuration: TimeInterval.random(in: 5...15)),action1, SKAction.wait(forDuration: 9),action2])
         self.run(SKAction.repeatForever(sequence), withKey: "specialPower")
     }
     

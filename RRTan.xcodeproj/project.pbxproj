@@ -33,7 +33,7 @@
 		7080CC5A23E11DC500EDD94F /* InitialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialScene.swift; sourceTree = "<group>"; };
 		7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuScene.swift; sourceTree = "<group>"; };
 		7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
-		70A06E1F23D736800054C127 /* RRTan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRTan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		70A06E1F23D736800054C127 /* Dale War.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dale War.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A06E2223D736800054C127 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70A06E2423D736800054C127 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		70A06E2623D736800054C127 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
@@ -72,7 +72,7 @@
 		70A06E2023D736800054C127 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				70A06E1F23D736800054C127 /* RRTan.app */,
+				70A06E1F23D736800054C127 /* Dale War.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 			);
 			name = RRTan;
 			productName = RRTan;
-			productReference = 70A06E1F23D736800054C127 /* RRTan.app */;
+			productReference = 70A06E1F23D736800054C127 /* Dale War.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -339,8 +339,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = rangel.RRTan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dale War";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -357,8 +358,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = rangel.RRTan;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Dale War";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -45,6 +45,12 @@ class HUDLayer: SKNode {
     let bestScoreIntLabel = SKLabelNode(text: "0")
     let scoreLabel = SKLabelNode(text: "Score")
     let scoreIntLabel = SKLabelNode(text: "0")
+    let gameCenterButton = SKSpriteNode(imageNamed: "gameCenter")
+    
+    //continue game Menu
+    let endGameButton = SKSpriteNode(imageNamed: "endGame")
+    let continueGameButton  = SKSpriteNode(imageNamed: "continueAdverting")
+    let continueLabel = SKLabelNode(text: "CONTINUE?")
     
     //Special nodes
    let progressBar = ProgressBar(textureBackground: "bgprogress", textureBar: "bar")
@@ -95,6 +101,26 @@ class HUDLayer: SKNode {
             self.delegate?.specialPower()
         }
         self.addChild(progressBar)
+        
+        endGameButton.position = CGPoint(x: 50, y: 500)
+        endGameButton.name = "endGameButton"
+        endGameButton.isHidden = true
+        endGameButton.zPosition = 4
+        self.addChild(endGameButton)
+        
+        continueGameButton.position = CGPoint(x: -50, y: 500)
+        continueGameButton.name = "continueGameButton"
+        continueGameButton.isHidden = true
+        continueGameButton.zPosition = 4
+        self.addChild(continueGameButton)
+        
+        continueLabel.fontColor = .blue
+        continueLabel.colorBlendFactor = 1.0
+        continueLabel.fontSize = 70
+        continueLabel.position = CGPoint(x: 0, y: 560)
+        continueLabel.zPosition = 4
+        continueLabel.isHidden = true
+        self.addChild(continueLabel)
     }
     
     private func setupColorsMenu(){
@@ -125,6 +151,14 @@ class HUDLayer: SKNode {
         playAgain.isHidden = true
         playAgain.zPosition = 4
         self.addChild(playAgain)
+        
+        gameCenterButton.position = CGPoint(x: 0, y: 500)
+        gameCenterButton.name = "gameCenterButton"
+        gameCenterButton.isHidden = true
+        gameCenterButton.zPosition = 4
+        gameCenterButton.setScale(1.8)
+        self.addChild(gameCenterButton)
+               
         
         bestScoreLabel.color = .blue
         bestScoreLabel.colorBlendFactor = 1.0
@@ -168,14 +202,34 @@ class HUDLayer: SKNode {
         self.scoreLabel.isHidden = false
         self.scoreIntLabel.isHidden = false
         self.scoreIntLabel.text = "\(self.scoreInt)"
+        self.endGameButton.isHidden = true
+        self.continueGameButton.isHidden = true
+        self.gameCenterButton.isHidden = false
+        self.continueLabel.isHidden = true
     }
-       
+    
+    
+    func setupWishContinueMenu(){
+       shadowNode.isHidden = false
+       endGameButton.isHidden = false
+       pauseButton.isHidden = true
+       continueGameButton.isHidden = false
+       continueLabel.isHidden = false
+    }
+    
+    func showAdvertising(){
+        //mostrar a propaganda
+        
+        delegate?.continueGameAfterDie()
+    }
+    
     private func setupPauseMenu(){
         
         shadowNode.isHidden = false
         playButton.isHidden = false
         pauseButton.isHidden = true
         pauseLabel.isHidden = false
+        gameCenterButton.isHidden = false
     }
     
     private func unsetupPauseMenu(){
@@ -183,6 +237,7 @@ class HUDLayer: SKNode {
         playButton.isHidden = true
         pauseButton.isHidden = false
         pauseLabel.isHidden = true
+        gameCenterButton.isHidden = true
     }
     
     func updateScore(){
@@ -212,6 +267,15 @@ class HUDLayer: SKNode {
                 self.delegate?.pauseGame()
             }
             
+            if endGameButton.contains(location){
+                self.setupEndGameMenu()
+            }
+            
+            if continueGameButton.contains(location){
+                self.showAdvertising()
+            }
+            
+            
             if playButton.contains(location){
                 self.unsetupPauseMenu()
                 self.delegate?.resumeGame()
@@ -240,4 +304,5 @@ protocol HudDelegate{
     func resumeGame()
     func specialPower()
     func restartGame()
+    func continueGameAfterDie()
 }

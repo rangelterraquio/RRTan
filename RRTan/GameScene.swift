@@ -89,6 +89,11 @@ class GameScene: SKScene {
 //HUD delegate
 
 extension GameScene: HudDelegate{
+    
+    func continueGameAfterDie() {
+        
+    }
+    
     func pauseGame() {
         gameLayer.pauseGame()
     }
@@ -151,7 +156,7 @@ extension GameScene:SKPhysicsContactDelegate{
                       let action2 = SKAction.run {
                           node.speed = 1
                       }
-                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.7),action2])
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.5),action2])
                       node.run(sequece)
                 }
             }
@@ -189,7 +194,7 @@ extension GameScene:SKPhysicsContactDelegate{
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
             self.gameLayer.saveTheBestScore(score: self.hudLayer.scoreInt)
-            self.hudLayer.setupEndGameMenu()
+            self.hudLayer.setupWishContinueMenu()
          }
 
          if contact.bodyA.categoryBitMask == PhysicsCategory.collectible || contact.bodyB.categoryBitMask == PhysicsCategory.collectible{
