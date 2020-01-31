@@ -112,6 +112,7 @@ class HUDLayer: SKNode {
         continueGameButton.name = "continueGameButton"
         continueGameButton.isHidden = true
         continueGameButton.zPosition = 4
+        continueGameButton.setScale(1.5)
         self.addChild(continueGameButton)
         
         continueLabel.fontColor = .blue
@@ -272,7 +273,8 @@ class HUDLayer: SKNode {
             }
             
             if continueGameButton.contains(location){
-                self.showAdvertising()
+                //self.showAdvertising()
+                self.delegate?.continueGameAfterDie()
             }
             
             

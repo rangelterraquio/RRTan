@@ -8,7 +8,7 @@
 
 import SpriteKit
 import GameplayKit
-
+import GoogleMobileAds
 class GameScene: SKScene {
     
    
@@ -16,8 +16,16 @@ class GameScene: SKScene {
     let hudLayer: HUDLayer = HUDLayer()
     let screenSize = UIScreen.main.bounds
     
+    
+    var gaReward: GADRewardedAd? = nil
+
     var isNodesInContact = true
+    
+    var viewController: UIViewController? = nil
+    
+    
     override func didMove(to view: SKView) {
+        sharedViewController?.scene = self
         self.physicsWorld.contactDelegate = self
         self.backgroundColor = .gray
         self.addChild(gameLayer)
@@ -32,6 +40,7 @@ class GameScene: SKScene {
         
         hudLayer.position = CGPoint(x: 0, y: -self.size.height/2 * 0.8)
     }
+    
     
     
     
@@ -91,6 +100,14 @@ class GameScene: SKScene {
 extension GameScene: HudDelegate{
     
     func continueGameAfterDie() {
+        
+        if let vc = sharedViewController{
+
+            if GADRewardBasedVideoAd.sharedInstance().isReady == true{
+                GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: vc)
+            }
+        }
+
         
     }
     
@@ -195,6 +212,8 @@ extension GameScene:SKPhysicsContactDelegate{
             self.addChild(node)
             self.gameLayer.saveTheBestScore(score: self.hudLayer.scoreInt)
             self.hudLayer.setupWishContinueMenu()
+            
+
          }
 
          if contact.bodyA.categoryBitMask == PhysicsCategory.collectible || contact.bodyB.categoryBitMask == PhysicsCategory.collectible{

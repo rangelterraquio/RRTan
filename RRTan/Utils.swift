@@ -80,3 +80,7 @@ extension CGPoint {
     return self / length()
   }
 }
+
+//shared view Controller
+let appIDAdMob = "ca-app-pub-3940256099942544/1712485313"
+weak var sharedViewController: GameViewController? = nil
