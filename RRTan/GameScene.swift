@@ -101,12 +101,7 @@ extension GameScene: HudDelegate{
     
     func continueGameAfterDie() {
         
-        if let vc = sharedViewController{
-
-            if GADRewardBasedVideoAd.sharedInstance().isReady == true{
-                GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: vc)
-            }
-        }
+        //vou ter q arruamr essa funca
 
         
     }
@@ -134,12 +129,39 @@ extension GameScene: HudDelegate{
     }
     
     func restartGame() {
-         if let scene = SKScene(fileNamed: "GameScene") {
-           // Set the scale mode to scale to fit the window
-           scene.scaleMode = .aspectFill
-           // Present the scene
-            self.view?.presentScene(scene)
-         }
+        if let scene = SKScene(fileNamed: "GameScene") {
+          // Set the scale mode to scale to fit the window
+          scene.scaleMode = .aspectFill
+          // Present the scene
+           self.view?.presentScene(scene)
+        }
+    }
+    
+    func showAdd(type: AdType) {
+        switch type {
+        case .interstitial:
+             if let vc = sharedViewController{
+                   if vc.timesPlayed % 3 == 0{
+                       if let ad = vc.interstitial{
+                           if ad.isReady{
+                               ad.present(fromRootViewController: vc)
+                           }
+                       }
+                   }else{
+                        self.restartGame()
+                    }
+
+                   }
+        case .reward:
+            if let vc = sharedViewController{
+
+                if GADRewardBasedVideoAd.sharedInstance().isReady == true{
+                    GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: vc)
+                }else{
+                    self.hudLayer.setupEndGameMenu()
+                }
+            }
+        }
     }
     
 }
@@ -210,9 +232,10 @@ extension GameScene:SKPhysicsContactDelegate{
             node.fontColor = .green
             node.position  = CGPoint(x: 0, y: 0)
             self.addChild(node)
+            sharedViewController?.timesPlayed += 1
             self.gameLayer.saveTheBestScore(score: self.hudLayer.scoreInt)
             self.hudLayer.setupWishContinueMenu()
-            
+            sharedViewController?.interstitial?.load(GADRequest())
 
          }
 

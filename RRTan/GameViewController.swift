@@ -13,8 +13,8 @@ import GoogleMobileAds
 class GameViewController: UIViewController {
 
    
-    
-
+    var interstitial: GADInterstitial? = nil
+    var timesPlayed = 0
     var scene : GameScene? {
        didSet{
           //Optional: In case you can change scenes - remove view controller from old scen
@@ -25,6 +25,8 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        interstitial = GADInterstitial(adUnitID: appIDAdMob)
+        interstitial?.delegate = self
         sharedViewController = self
         GADRewardBasedVideoAd.sharedInstance().delegate = self
         if let view = self.view as! SKView? {
@@ -78,6 +80,14 @@ class GameViewController: UIViewController {
        }
        return gaReward
      }
+    
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+      let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+      interstitial.delegate = self
+      interstitial.load(GADRequest())
+      return interstitial
+    }
 }
 
 
@@ -108,6 +118,15 @@ extension GameViewController: GADRewardBasedVideoAdDelegate{
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd,
         didFailToLoadWithError error: Error) {
       print("Reward based video ad failed to load.")
+    }
+    
+}
+
+
+extension GameViewController: GADInterstitialDelegate{
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        self.interstitial = createAndLoadInterstitial()
+        scene?.restartGame()
     }
     
 }

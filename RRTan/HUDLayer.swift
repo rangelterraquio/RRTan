@@ -274,7 +274,8 @@ class HUDLayer: SKNode {
             
             if continueGameButton.contains(location){
                 //self.showAdvertising()
-                self.delegate?.continueGameAfterDie()
+                //self.delegate?.continueGameAfterDie()
+                self.delegate?.showAdd(type: .reward)
             }
             
             
@@ -284,7 +285,7 @@ class HUDLayer: SKNode {
             }
             
             if playAgain.contains(location){
-             self.delegate?.restartGame()
+                self.delegate?.showAdd(type: .interstitial)
             }
         }
     }
@@ -307,4 +308,7 @@ protocol HudDelegate{
     func specialPower()
     func restartGame()
     func continueGameAfterDie()
+    func showAdd(type: AdType)
 }
+
+
