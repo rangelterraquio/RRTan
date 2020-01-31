@@ -12,9 +12,9 @@ import GameplayKit
 import GoogleMobileAds
 class GameViewController: UIViewController {
 
-    var gaReward: GADRewardedAd? = nil
+   
     
-    
+
     var scene : GameScene? {
        didSet{
           //Optional: In case you can change scenes - remove view controller from old scen
@@ -26,7 +26,6 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sharedViewController = self
-        gaReward = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
         GADRewardBasedVideoAd.sharedInstance().delegate = self
         if let view = self.view as! SKView? {
             
@@ -68,9 +67,9 @@ class GameViewController: UIViewController {
     }
     
     func createAndLoadRewardedAd() -> GADRewardedAd? {
-       gaReward = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
+       let gaReward = GADRewardedAd(adUnitID: "ca-app-pub-3940256099942544/1712485313")
          
-       gaReward?.load(GADRequest()) { error in
+       gaReward.load(GADRequest()) { error in
          if let error = error {
            print("Loading failed: \(error)")
          } else {
