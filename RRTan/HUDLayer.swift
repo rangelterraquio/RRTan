@@ -269,7 +269,7 @@ class HUDLayer: SKNode {
             }
             
             if endGameButton.contains(location){
-                self.setupEndGameMenu()
+               self.setupEndGameMenu()
             }
             
             if continueGameButton.contains(location){
@@ -284,7 +284,7 @@ class HUDLayer: SKNode {
                 self.delegate?.resumeGame()
             }
             
-            if playAgain.contains(location){
+            if playAgain.contains(location), !playAgain.isHidden{
                 self.delegate?.showAdd(type: .interstitial)
             }
         }

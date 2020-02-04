@@ -106,8 +106,8 @@ class GameViewController: UIViewController {
 
 extension GameViewController: GADRewardBasedVideoAdDelegate{
     func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
-        scene?.restartGame()
-//        scene?.continueGameAfterDie() devo implementar esse metodo
+        
+        scene?.continueGameAfterDie() 
     }
     
     

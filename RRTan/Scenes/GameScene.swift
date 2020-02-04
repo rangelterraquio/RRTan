@@ -100,10 +100,11 @@ class GameScene: SKScene {
 extension GameScene: HudDelegate{
     
     func continueGameAfterDie() {
-        
-        //vou ter q arruamr essa funca
-
-        
+        gameLayer.continueGameAfterDie()
+        hudLayer.shadowNode.isHidden = true
+        hudLayer.endGameButton.isHidden = true
+        hudLayer.continueGameButton.isHidden = true
+        hudLayer.continueLabel.isHidden = true
     }
     
     func pauseGame() {
@@ -226,15 +227,11 @@ extension GameScene:SKPhysicsContactDelegate{
         }
 
          if contact.bodyA.categoryBitMask == PhysicsCategory.character || contact.bodyB.categoryBitMask == PhysicsCategory.character{
+            gameLayer.isPaused = true
             self.isPaused = true
-            let node  = SKLabelNode(text: "VC MORREU")
-            node.fontSize = 80
-            node.fontColor = .green
-            node.position  = CGPoint(x: 0, y: 0)
-            self.addChild(node)
             sharedViewController?.timesPlayed += 1
             self.gameLayer.saveTheBestScore(score: self.hudLayer.scoreInt)
-            self.hudLayer.setupWishContinueMenu()
+            self.gameLayer.isAdstoLiveUsed ? self.hudLayer.setupEndGameMenu() : self.hudLayer.setupWishContinueMenu()
             sharedViewController?.interstitial?.load(GADRequest())
 
          }

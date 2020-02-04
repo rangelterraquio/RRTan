@@ -20,7 +20,7 @@ class GameLayer: SKNode{
     //com essas 2 properties eu verifico se tinha um coletável na hora q o jogador pressionou pause
     var isCollectibleActive = false
     var isSpecialPowerActive = false
-    
+    var isAdstoLiveUsed = false
     override init() {
         super.init()
         character.position = CGPoint.zero
@@ -165,6 +165,11 @@ class GameLayer: SKNode{
     }
     func pauseGame(){
         self.isPaused = true
+//        gameLayer.isPaused = true
+//         
+//          gameLayer.physicsWorld.speed = 0
+//          gameLayer.speed = 0.0
+
     }
     
     func resumeGame(){
@@ -178,5 +183,19 @@ class GameLayer: SKNode{
         }
         
         
+    }
+    
+    func continueGameAfterDie(){
+        
+            for node in self.children{
+                if node is Enemy{
+                    if (character.position.x - abs(node.position.x) ) > -150 || (character.position.y - abs(node.position.y) ) > -150 {
+                        node.removeFromParent()
+                    }
+                }
+            }
+        self.isPaused = false
+        self.parent!.isPaused = false
+        self.isAdstoLiveUsed = true
     }
 }

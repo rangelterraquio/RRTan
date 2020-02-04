@@ -68,6 +68,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70924DF123E99A0300515893 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				7080CC5A23E11DC500EDD94F /* InitialScene.swift */,
+				70A06E2823D736800054C127 /* GameScene.swift */,
+				70A06E2423D736800054C127 /* GameScene.sks */,
+				7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		70A06E1623D736800054C127 = {
 			isa = PBXGroup;
 			children = (
@@ -89,15 +100,12 @@
 		70A06E2123D736800054C127 /* RRTan */ = {
 			isa = PBXGroup;
 			children = (
+				70924DF123E99A0300515893 /* Scenes */,
 				70A06E2223D736800054C127 /* AppDelegate.swift */,
-				70A06E2423D736800054C127 /* GameScene.sks */,
 				70A06E2623D736800054C127 /* Actions.sks */,
 				70EEB20B23D7894900D0FD26 /* GameLayer.swift */,
-				7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */,
-				70A06E2823D736800054C127 /* GameScene.swift */,
 				70EEB20D23D7C34C00D0FD26 /* HUDLayer.swift */,
 				70EEB20923D783F000D0FD26 /* Character.swift */,
-				7080CC5A23E11DC500EDD94F /* InitialScene.swift */,
 				70A06E2A23D736800054C127 /* GameViewController.swift */,
 				70A06E2C23D736800054C127 /* Main.storyboard */,
 				70A06E2F23D736840054C127 /* Assets.xcassets */,
