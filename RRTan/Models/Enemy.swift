@@ -17,7 +17,7 @@ class Enemy: SKSpriteNode {
     var delegate: HudDelegate? = nil
     var life: UInt32 = 100 {
         didSet{
-            if life == 0 {
+            if life <= 0 {
                 self.removeFromParent()
             }
             labelLife.text = "\(life)"

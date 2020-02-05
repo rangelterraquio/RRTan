@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4EB3A46C0A611ADBF15DADB9 /* Pods_RRTan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C193BA4932C2B0DC44E59AD0 /* Pods_RRTan.framework */; };
 		7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5CF23D91FBE00BD8BCD /* Collectable.swift */; };
-		7070D5D223D9205200BD8BCD /* ItemGameProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */; };
 		7080CC5B23E11DC500EDD94F /* InitialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080CC5A23E11DC500EDD94F /* InitialScene.swift */; };
 		7080CC5D23E124F500EDD94F /* HomeMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */; };
 		7088901023DA1C4E007CBEA3 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */; };
@@ -21,7 +20,6 @@
 		70A06E2E23D736800054C127 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A06E2C23D736800054C127 /* Main.storyboard */; };
 		70A06E3023D736840054C127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70A06E2F23D736840054C127 /* Assets.xcassets */; };
 		70A06E3323D736840054C127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A06E3123D736840054C127 /* LaunchScreen.storyboard */; };
-		70BF66FA23E2295500FE5A72 /* ADViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BF66F923E2295500FE5A72 /* ADViewController.swift */; };
 		70EEB20823D76A6C00D0FD26 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB20723D76A6C00D0FD26 /* Utils.swift */; };
 		70EEB20A23D783F000D0FD26 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB20923D783F000D0FD26 /* Character.swift */; };
 		70EEB20C23D7894900D0FD26 /* GameLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EEB20B23D7894900D0FD26 /* GameLayer.swift */; };
@@ -33,7 +31,6 @@
 		1C7D789F3E71FA986E5A69DE /* Pods-RRTan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RRTan.debug.xcconfig"; path = "Target Support Files/Pods-RRTan/Pods-RRTan.debug.xcconfig"; sourceTree = "<group>"; };
 		2D67ADC860B45B5C21492523 /* Pods-RRTan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RRTan.release.xcconfig"; path = "Target Support Files/Pods-RRTan/Pods-RRTan.release.xcconfig"; sourceTree = "<group>"; };
 		7070D5CF23D91FBE00BD8BCD /* Collectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectable.swift; sourceTree = "<group>"; };
-		7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGameProtocol.swift; sourceTree = "<group>"; };
 		7080CC5A23E11DC500EDD94F /* InitialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialScene.swift; sourceTree = "<group>"; };
 		7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuScene.swift; sourceTree = "<group>"; };
 		7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -47,7 +44,6 @@
 		70A06E2F23D736840054C127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70A06E3223D736840054C127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70A06E3423D736840054C127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		70BF66F923E2295500FE5A72 /* ADViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADViewController.swift; sourceTree = "<group>"; };
 		70EEB20723D76A6C00D0FD26 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		70EEB20923D783F000D0FD26 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		70EEB20B23D7894900D0FD26 /* GameLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLayer.swift; sourceTree = "<group>"; };
@@ -68,9 +64,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		70320FD323EA448E007C641F /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				70EEB20B23D7894900D0FD26 /* GameLayer.swift */,
+				70EEB20D23D7C34C00D0FD26 /* HUDLayer.swift */,
+			);
+			path = Layers;
+			sourceTree = "<group>";
+		};
+		70320FD423EA44A8007C641F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				70EEB20923D783F000D0FD26 /* Character.swift */,
+				70EEB20F23D7D7D700D0FD26 /* Enemy.swift */,
+				7070D5CF23D91FBE00BD8BCD /* Collectable.swift */,
+				7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		70320FD523EA44F2007C641F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				70A06E2A23D736800054C127 /* GameViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		70320FD623EA4522007C641F /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				70A06E2223D736800054C127 /* AppDelegate.swift */,
+				70EEB20723D76A6C00D0FD26 /* Utils.swift */,
+			);
+			path = Others;
+			sourceTree = "<group>";
+		};
 		70924DF123E99A0300515893 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				70A06E2623D736800054C127 /* Actions.sks */,
 				7080CC5A23E11DC500EDD94F /* InitialScene.swift */,
 				70A06E2823D736800054C127 /* GameScene.swift */,
 				70A06E2423D736800054C127 /* GameScene.sks */,
@@ -100,23 +134,15 @@
 		70A06E2123D736800054C127 /* RRTan */ = {
 			isa = PBXGroup;
 			children = (
+				70320FD523EA44F2007C641F /* Controllers */,
 				70924DF123E99A0300515893 /* Scenes */,
-				70A06E2223D736800054C127 /* AppDelegate.swift */,
-				70A06E2623D736800054C127 /* Actions.sks */,
-				70EEB20B23D7894900D0FD26 /* GameLayer.swift */,
-				70EEB20D23D7C34C00D0FD26 /* HUDLayer.swift */,
-				70EEB20923D783F000D0FD26 /* Character.swift */,
-				70A06E2A23D736800054C127 /* GameViewController.swift */,
+				70320FD323EA448E007C641F /* Layers */,
+				70320FD423EA44A8007C641F /* Models */,
+				70320FD623EA4522007C641F /* Others */,
 				70A06E2C23D736800054C127 /* Main.storyboard */,
 				70A06E2F23D736840054C127 /* Assets.xcassets */,
 				70A06E3123D736840054C127 /* LaunchScreen.storyboard */,
 				70A06E3423D736840054C127 /* Info.plist */,
-				70EEB20723D76A6C00D0FD26 /* Utils.swift */,
-				70EEB20F23D7D7D700D0FD26 /* Enemy.swift */,
-				7070D5CF23D91FBE00BD8BCD /* Collectable.swift */,
-				7070D5D123D9205200BD8BCD /* ItemGameProtocol.swift */,
-				7088900F23DA1C4E007CBEA3 /* ProgressBar.swift */,
-				70BF66F923E2295500FE5A72 /* ADViewController.swift */,
 			);
 			path = RRTan;
 			sourceTree = "<group>";
@@ -257,10 +283,8 @@
 			files = (
 				70A06E2923D736800054C127 /* GameScene.swift in Sources */,
 				70EEB20C23D7894900D0FD26 /* GameLayer.swift in Sources */,
-				7070D5D223D9205200BD8BCD /* ItemGameProtocol.swift in Sources */,
 				7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */,
 				7080CC5D23E124F500EDD94F /* HomeMenuScene.swift in Sources */,
-				70BF66FA23E2295500FE5A72 /* ADViewController.swift in Sources */,
 				70A06E2B23D736800054C127 /* GameViewController.swift in Sources */,
 				70EEB20E23D7C34C00D0FD26 /* HUDLayer.swift in Sources */,
 				70EEB20A23D783F000D0FD26 /* Character.swift in Sources */,

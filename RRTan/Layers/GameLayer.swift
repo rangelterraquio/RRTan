@@ -29,6 +29,7 @@ class GameLayer: SKNode{
         spawnEnemies()
         spawnUpLevel()
         spawnSpecialPower()
+        spawnTimePower()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -109,8 +110,28 @@ class GameLayer: SKNode{
         let action2 = SKAction.run {
             node.removeFromParent()
         }
-        let sequence = SKAction.sequence([SKAction.wait(forDuration: TimeInterval.random(in: 5...15)),action1, SKAction.wait(forDuration: 9),action2])
+        let sequence = SKAction.sequence([SKAction.wait(forDuration: TimeInterval.random(in: 20...35)),action1, SKAction.wait(forDuration: 9),action2])
         self.run(SKAction.repeatForever(sequence), withKey: "specialPower")
+    }
+    
+    func spawnTimePower(){
+        var node: Collectable!
+
+        let action1 = SKAction.run {
+            node = Collectable(textureName: "clock")
+            self.isSpecialPowerActive = true
+            let xPos = CGFloat.random(in: -self.screenSize.width*0.7...self.screenSize.width*0.7)
+            let yPos = CGFloat.random(in: -self.screenSize.height*0.7...self.screenSize.height*0.7)
+            node.position = CGPoint(x: xPos, y: yPos)
+            node.life = Int(arc4random()) % node.lifeRange
+            node.name = "timePower"
+            self.addChild(node)
+        }
+        let action2 = SKAction.run {
+            node.removeFromParent()
+        }
+        let sequence = SKAction.sequence([SKAction.wait(forDuration: TimeInterval.random(in: 35...45)),action1, SKAction.wait(forDuration: 9),action2])
+        self.run(SKAction.repeatForever(sequence), withKey: "timePower")
     }
     
     
@@ -156,6 +177,27 @@ class GameLayer: SKNode{
         self.run(SKAction.repeatForever(sequece2))
     }
     
+    func activeteTimerPower(){
+        let action1 = SKAction.run {
+            for node in self.children{
+                if node is Enemy{
+                    node.isPaused = true
+                }
+            }
+        }
+        
+        let action2 = SKAction.run {
+            for node in self.children{
+                if node is Enemy{
+                    node.isPaused = false
+                }
+            }
+        }
+        
+        self.run(SKAction.sequence([action1, SKAction.wait(forDuration: 8), action2]))
+        
+    }
+    
     func invalidateSpawnSpecial(){
         self.removeAction(forKey: "specialPower")
         self.run(SKAction.sequence([SKAction.wait(forDuration: 9)])) {
@@ -165,10 +207,7 @@ class GameLayer: SKNode{
     }
     func pauseGame(){
         self.isPaused = true
-//        gameLayer.isPaused = true
-//         
-//          gameLayer.physicsWorld.speed = 0
-//          gameLayer.speed = 0.0
+// 
 
     }
     

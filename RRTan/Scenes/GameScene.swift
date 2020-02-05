@@ -109,10 +109,14 @@ extension GameScene: HudDelegate{
     
     func pauseGame() {
         gameLayer.pauseGame()
+        self.physicsWorld.speed = 0
+        self.speed = 0.0
     }
     
     func resumeGame() {
         gameLayer.resumeGame()
+        self.physicsWorld.speed = 1.0
+        self.speed = 1.0
     }
     
     
@@ -196,7 +200,7 @@ extension GameScene:SKPhysicsContactDelegate{
                       let action2 = SKAction.run {
                           node.speed = 1
                       }
-                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.5),action2])
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.2),action2])
                       node.run(sequece)
                 }
             }
@@ -220,7 +224,7 @@ extension GameScene:SKPhysicsContactDelegate{
                     let action2 = SKAction.run {
                         node.speed = 1
                     }
-                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.7),action2])
+                    let sequece = SKAction.sequence([action,SKAction.wait(forDuration: 0.2),action2])
                     node.run(sequece)
                 }
             }
@@ -247,6 +251,7 @@ extension GameScene:SKPhysicsContactDelegate{
                      }
                 node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
                 }
+                
             }else if contact.bodyB.node?.name == "specialPower"{
                 if let node = contact.bodyA.node as? Collectable{
                     let action = SKAction.run {
@@ -255,19 +260,29 @@ extension GameScene:SKPhysicsContactDelegate{
                          }
                 node.run(SKAction.repeatForever(SKAction.sequence([action, SKAction.wait(forDuration: 0.1)])), withKey: "killingAction")
                 }
+                
+                
             } else if let node = contact.bodyA.node as? Collectable, node.name == "levelUP"{
                 node.life -= 1
                 gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : 0
             }else if let node = contact.bodyA.node as? Collectable, node.name == "specialPower"{
                node.life -= 1
                if node.life == 0 { hudLayer.progressBar.progress += 0.35 }
+            }else if let node = contact.bodyA.node as? Collectable, node.name == "timePower"{
+                node.life -= 1
+                if node.life == 0 { gameLayer.activeteTimerPower() }
             }
+            
+            
             if let node = contact.bodyB.node as? Collectable, node.name == "levelUP"{
                 node.life -= 1
                 gameLayer.character.shootingsPerSecond -= node.life == 0 ?  0.12 : 0
             }else if let node = contact.bodyA.node as? Collectable, node.name == "specialPower"{
                  node.life -= 1
                 if node.life == 0 { hudLayer.progressBar.progress += 0.35 }
+            }else if let node = contact.bodyA.node as? Collectable, node.name == "timePower"{
+                node.life -= 1
+                 if node.life == 0 { gameLayer.activeteTimerPower() }
             }
          }
 
