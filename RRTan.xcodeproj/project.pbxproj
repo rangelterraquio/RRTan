@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4EB3A46C0A611ADBF15DADB9 /* Pods_RRTan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C193BA4932C2B0DC44E59AD0 /* Pods_RRTan.framework */; };
+		70320FD823EA4C76007C641F /* StoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70320FD723EA4C76007C641F /* StoreScene.swift */; };
 		7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7070D5CF23D91FBE00BD8BCD /* Collectable.swift */; };
 		7080CC5B23E11DC500EDD94F /* InitialScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080CC5A23E11DC500EDD94F /* InitialScene.swift */; };
 		7080CC5D23E124F500EDD94F /* HomeMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		1C7D789F3E71FA986E5A69DE /* Pods-RRTan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RRTan.debug.xcconfig"; path = "Target Support Files/Pods-RRTan/Pods-RRTan.debug.xcconfig"; sourceTree = "<group>"; };
 		2D67ADC860B45B5C21492523 /* Pods-RRTan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RRTan.release.xcconfig"; path = "Target Support Files/Pods-RRTan/Pods-RRTan.release.xcconfig"; sourceTree = "<group>"; };
+		70320FD723EA4C76007C641F /* StoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreScene.swift; sourceTree = "<group>"; };
 		7070D5CF23D91FBE00BD8BCD /* Collectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collectable.swift; sourceTree = "<group>"; };
 		7080CC5A23E11DC500EDD94F /* InitialScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialScene.swift; sourceTree = "<group>"; };
 		7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMenuScene.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				70A06E2823D736800054C127 /* GameScene.swift */,
 				70A06E2423D736800054C127 /* GameScene.sks */,
 				7080CC5C23E124F500EDD94F /* HomeMenuScene.swift */,
+				70320FD723EA4C76007C641F /* StoreScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				70A06E2923D736800054C127 /* GameScene.swift in Sources */,
+				70320FD823EA4C76007C641F /* StoreScene.swift in Sources */,
 				70EEB20C23D7894900D0FD26 /* GameLayer.swift in Sources */,
 				7070D5D023D91FBE00BD8BCD /* Collectable.swift in Sources */,
 				7080CC5D23E124F500EDD94F /* HomeMenuScene.swift in Sources */,

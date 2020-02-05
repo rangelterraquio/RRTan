@@ -28,9 +28,11 @@ PODS:
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
+  - SwiftySKScrollView (2.3.1)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
+  - SwiftySKScrollView
 
 SPEC REPOS:
   trunk:
@@ -38,13 +40,15 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - nanopb
+    - SwiftySKScrollView
 
 SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 8241b4bd0f11b4f03f5dcd4affccb04ca938f050
   GoogleAppMeasurement: d0560d915abf15e692e8538ba1d58442217b6aff
   GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  SwiftySKScrollView: bb3482d1e9e0e050fa9c1a2cde9324371720dbb9
 
-PODFILE CHECKSUM: a7edc5846c7cc67c2b533d7696d55c8528af2778
+PODFILE CHECKSUM: b20419f843d0a580b878b1d3755402ce1c1897ce
 
 COCOAPODS: 1.9.0.beta.2

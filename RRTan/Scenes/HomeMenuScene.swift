@@ -16,7 +16,7 @@ class HomeMenuScene: SKScene{
     
     let titleLabel = SKLabelNode(text: "Dale War")
     let playButton = SKSpriteNode(imageNamed: "PlayButton")
-    
+    let storeButton = SKSpriteNode(imageNamed: "cart")
     
     override func didMove(to view: SKView) {
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -28,8 +28,12 @@ class HomeMenuScene: SKScene{
         self.addChild(titleLabel)
         
         
-        playButton.position = CGPoint(x: 0, y: -60)
+        playButton.position = CGPoint(x: 70, y: -60)
         self.addChild(playButton)
+        
+        
+        storeButton.position = CGPoint(x: -70, y: -60)
+        self.addChild(storeButton)
     }
     
     
@@ -42,6 +46,12 @@ class HomeMenuScene: SKScene{
             let scene = GameScene(fileNamed: "GameScene")
             scene?.scaleMode = .aspectFill
             self.view?.presentScene(scene!, transition: SKTransition.crossFade(withDuration: 1.5))
+        }
+        
+        if storeButton.contains(location){
+            let scene = StoreScene(size: CGSize(width: 750, height: 1334))
+            scene.scaleMode = .aspectFill
+            self.view?.presentScene(scene, transition: SKTransition.crossFade(withDuration: 0.8))
         }
     }
     
